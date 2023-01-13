@@ -23,7 +23,7 @@ func main() {
 		xr.WithUsername("grpc"),
 		xr.WithPassword("53cret"),
 		xr.WithHost("192.168.88.3:57344"),
-		xr.WithTimeout(30),
+		xr.WithTimeout(600),
 	)
 	conn, ctx, err := xr.Connect(*router)
 	if err != nil {
