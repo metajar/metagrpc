@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	xr "metagrpc"
+	"metagrpc/pkg/oper/interfaces"
 	"time"
 )
 
@@ -39,5 +40,15 @@ func main() {
 		log.Fatalln(err)
 	}
 	fmt.Printf("\ninterface properties from %s\n %s\n", router.Host, output)
+
+	// New method of getting shit
+	io := interfaces.Interfaces{}
+	err = interfaces.Unmarshal([]byte(output), &io)
+	if err != nil {
+		fmt.Println(err)
+	}
+	for k, v := range io.Interfaces.InterfaceBriefs.InterfaceBrief {
+		fmt.Println(k, *v.InterfaceName)
+	}
 
 }
