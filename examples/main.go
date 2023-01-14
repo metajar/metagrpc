@@ -12,8 +12,12 @@ var p = `{
     "Cisco-IOS-XR-ifmgr-oper:interface-properties": [null]
 }`
 
-var i = `{
-    "Cisco-IOS-XR-invmgr-oper:inventory": [null]
+var intbrief = `{
+    "Cisco-IOS-XR-pfi-im-cmd-oper:interfaces":
+    {
+        "interface-briefs": {"interface-brief": {"interface-name":[null], "type":[null]}}
+     
+    }
 }`
 
 func main() {
@@ -30,7 +34,7 @@ func main() {
 		log.Fatalf("could not setup a client connection to %s, %v", router.Host, err)
 	}
 	defer conn.Close()
-	output, err := xr.Get(ctx, conn, i, id)
+	output, err := xr.Get(ctx, conn, intbrief, id)
 	if err != nil {
 		log.Fatalln(err)
 	}
