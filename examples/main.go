@@ -21,6 +21,32 @@ var intbrief = `{
     }
 }`
 
+var inventory = `{
+    "Cisco-IOS-XR-invmgr-oper:inventory":
+    {
+        "entities":
+        {
+            "entity":
+            {
+                "attributes":
+                {
+                    "inv-basic-bag":
+                    {
+                        "name":
+                        [
+                            null
+                        ],
+                        "serial-number":
+                        [
+                            null
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}`
+
 func main() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	id := r.Int63n(10000)
@@ -40,7 +66,6 @@ func main() {
 		log.Fatalln(err)
 	}
 	fmt.Printf("\ninterface properties from %s\n %s\n", router.Host, output)
-
 	// New method of getting shit
 	io := interfaces.Interfaces{}
 	err = interfaces.Unmarshal([]byte(output), &io)
