@@ -3,11 +3,18 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/adrg/strutil"
+	"github.com/adrg/strutil/metrics"
 	"log"
 	"math/rand"
 	xr "metagrpc"
 	"time"
 )
+
+var mainPolicy = map[string]string{
+	"LEVEL-3": "route-policy LEVEL-3\n  if community is-empty then\n    set community 9999:9993\n  else\n    set community 46489:3356\n  endif\n  if origin is incomplete then\n    drop\n  else\n    prepend as-path 19108\n  endif\nend-policy\n",
+	"TELIA":   "route-policy TELIA\n  if community is-empty then\n    set community 9999:999\n  else\n    set community 46489:1299\n  endif\n  if origin is incomplete then\n    drop\n  else\n    prepend as-path 19108\n  endif\nend-policy\n",
+}
 
 var rpl = `
   {"Cisco-IOS-XR-policy-repository-cfg:routing-policy": {
@@ -40,6 +47,10 @@ func main() {
 	for _, v := range rpls.CiscoIOSXRPolicyRepositoryCFGRoutingPolicy.RoutePolicies.RoutePolicy {
 		fmt.Println(v.RoutePolicyName)
 		fmt.Println("-------------")
+		rate := strutil.Similarity(v.RplRoutePolicy, mainPolicy[v.RoutePolicyName], metrics.NewOverlapCoefficient())
+		fmt.Printf("%.2f percent match with golden policy\n\n", rate*100)
+		fmt.Println("ROUTE POLICY FOLLOWS:")
+
 		fmt.Println(v.RplRoutePolicy)
 	}
 

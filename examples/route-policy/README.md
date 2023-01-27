@@ -2,13 +2,15 @@
 
 Simple example how to retrieve route policies on devices
 via GRPC. This could then be leveraged for a route-policy store etc.
+In this example we are performing a overlap coefficient to rate the percentage of
+accuracy against the golden policy.
 
 
 
 Running Against device:
 
 ```bash
-(base) ➜  metagrpc git:(main) ✗ go run examples/main.go
+(base) ➜  metagrpc git:(main) ✗ go run examples/route-policy/main.go
 
 rpl store via GRPC cfg from 192.168.88.3:57344
  {
@@ -30,6 +32,9 @@ rpl store via GRPC cfg from 192.168.88.3:57344
 
 TELIA
 -------------
+100.00 percent match with golden policy
+
+ROUTE POLICY FOLLOWS:
 route-policy TELIA
   if community is-empty then
     set community 9999:999
@@ -45,6 +50,9 @@ end-policy
 
 LEVEL-3
 -------------
+99.53 percent match with golden policy
+
+ROUTE POLICY FOLLOWS:
 route-policy LEVEL-3
   if community is-empty then
     set community 9999:999
@@ -57,6 +65,7 @@ route-policy LEVEL-3
     prepend as-path 19108
   endif
 end-policy
+
 
 
 

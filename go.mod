@@ -3,6 +3,7 @@ module metagrpc
 go 1.19
 
 require (
+	github.com/adrg/strutil v0.3.0
 	github.com/openconfig/goyang v1.2.0
 	github.com/openconfig/ygot v0.25.6
 	google.golang.org/grpc v1.52.0
